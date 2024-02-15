@@ -9,6 +9,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "Enemy.h"
 
 //////////////////////////////////////////////////////////////////////////
 // ASquareMealCharacter
@@ -145,6 +146,20 @@ void ASquareMealCharacter::PlayerInteraction()
 						HitSquare->Destroy();
 						bIfSquare = true;
 						return;
+
+					}
+
+					//Check if enemy
+					AEnemy* HitEnemy = Cast<AEnemy>(HitActor);
+					if (HitEnemy != nullptr)
+					{
+						if (HitEnemy->isStunned)
+						{
+							HitEnemy->Destroy();
+							PlayerScore += HitEnemy->Score;
+							return;
+						}
+
 
 					}
 				}

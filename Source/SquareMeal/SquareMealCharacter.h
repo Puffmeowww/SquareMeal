@@ -40,6 +40,10 @@ class ASquareMealCharacter : public ACharacter
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Square", meta = (AllowPrivateAccess = "true"))
 	bool bIfSquare = false;
 
+public:
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	int PlayerScore = 0;
+
 	UPROPERTY(EditAnywhere, Category = "Gameplay")
 	TSubclassOf<class ASquare> SquareClass;
 
