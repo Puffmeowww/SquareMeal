@@ -10,6 +10,7 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "Enemy.h"
+#include "PatrolEnemyCharacter.h"
 
 //////////////////////////////////////////////////////////////////////////
 // ASquareMealCharacter
@@ -101,7 +102,7 @@ void ASquareMealCharacter::PlayerInteraction()
 	if (bIfSquare)
 	{
 		
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, TEXT("Press with "));
+		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, TEXT("Press with "));
 		if (SquareClass != nullptr) // Ensure the bullet class is selected in the editor.
 		{
 			FVector SpawnLocation = GetActorLocation() + (GetActorForwardVector() * 100); // Spawn in front of the player
@@ -110,7 +111,7 @@ void ASquareMealCharacter::PlayerInteraction()
 			ASquare* SquareProjectile = GetWorld()->SpawnActor<ASquare>(SquareClass, SpawnLocation, SpawnRotation);
 			if (SquareProjectile)
 			{
-				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Player decide Shoot"));
+				//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Player decide Shoot"));
 				SquareProjectile->Shoot(GetActorForwardVector());	
 				bIfSquare = false;
 				return;
@@ -122,7 +123,7 @@ void ASquareMealCharacter::PlayerInteraction()
 	//No square, check ray trace
 	else
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, TEXT("Press without "));
+		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, TEXT("Press without "));
 		//Check if is square
 		FVector StartLocation;
 		FVector EndLocation;
@@ -131,7 +132,7 @@ void ASquareMealCharacter::PlayerInteraction()
 
 		StartLocation = GetActorLocation();
 		Direction = GetActorForwardVector();
-		EndLocation = StartLocation + Direction * 70.f;
+		EndLocation = StartLocation + Direction * 50.f;
 		bool bHit = GetWorld()->LineTraceSingleByChannel(HitResult, StartLocation, EndLocation, ECC_Visibility);
 		if (bHit)
 		{
@@ -159,9 +160,21 @@ void ASquareMealCharacter::PlayerInteraction()
 							PlayerScore += HitEnemy->Score;
 							return;
 						}
-
-
 					}
+
+					//Check if characterEnemy
+					APatrolEnemyCharacter* HitCharacterEnemy = Cast<APatrolEnemyCharacter>(HitActor);
+					if (HitCharacterEnemy != nullptr)
+					{
+						if (HitCharacterEnemy->isStunned)
+						{
+							HitCharacterEnemy->Destroy();
+							PlayerScore += HitCharacterEnemy->Score;
+							return;
+						}
+					}
+
+
 				}
 			}
 		}
