@@ -37,8 +37,8 @@ void AEnemy::Tick(float DeltaTime)
 			SwitchPatrolPoint();
 		}
 
-		FRotator NewRotation = Direction.Rotation();
-		SetActorRotation(NewRotation);
+		//FRotator NewRotation = Direction.Rotation();
+		//SetActorRotation(NewRotation);
 	}
 
 
