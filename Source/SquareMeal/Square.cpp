@@ -44,7 +44,7 @@ void ASquare::Tick(float DeltaTime)
 
 void ASquare::Shoot(FVector direction)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Black, TEXT("Shoot"));
+	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Black, TEXT("Shoot"));
 	Velocity = direction * InitialSpeed;
 	bIfShoot = true;
 }

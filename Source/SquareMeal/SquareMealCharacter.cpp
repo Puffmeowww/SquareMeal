@@ -133,6 +133,10 @@ void ASquareMealCharacter::PlayerInteraction()
 		StartLocation = GetActorLocation();
 		Direction = GetActorForwardVector();
 		EndLocation = StartLocation + Direction * 50.f;
+
+		//new code
+		//FVector BoxHalfSize = FVector(50.0f, 50.0f, 50.0f);
+		//bool bHit = GetWorld()->SweepSingleByChannel(HitResult, StartLocation, EndLocation, FQuat::Identity, ECC_Visibility, FCollisionShape::MakeBox(BoxHalfSize));
 		bool bHit = GetWorld()->LineTraceSingleByChannel(HitResult, StartLocation, EndLocation, ECC_Visibility);
 		if (bHit)
 		{
@@ -168,6 +172,7 @@ void ASquareMealCharacter::PlayerInteraction()
 					{
 						if (HitCharacterEnemy->isStunned)
 						{
+							GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Black, TEXT("Shoot Patrol Enemy"));
 							HitCharacterEnemy->Destroy();
 							PlayerScore += HitCharacterEnemy->Score;
 							return;
